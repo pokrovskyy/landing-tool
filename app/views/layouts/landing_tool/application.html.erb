@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @page_title || 'Landing Tool' %></title>
+  <%= stylesheet_link_tag 'landing_tool/application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'landing_tool/application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="grey lighten-4">
+
+<%= render :partial => 'layouts/landing_tool/nav' %>
+
+<div class="container">
+  <%= render :partial => 'layouts/landing_tool/flash' %>
+  <div class="row section">
+    <div class="col s12 white z-depth-1">
+      <div class="col s12">
+        <div class="section">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render :partial => 'layouts/landing_tool/footer' %>
+
+</body>
+</html>

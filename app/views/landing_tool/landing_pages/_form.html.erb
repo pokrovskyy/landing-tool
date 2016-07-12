@@ -1,0 +1,69 @@
+<%= form_for(@landing_page) do |f| %>
+  <% if @landing_page.errors.any? %>
+    <div id="error_explanation">
+      <h2>Please fix the following errors:</h2>
+      <ul>
+        <% @landing_page.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.text_field :title, :class => '', :required => true %>
+      <%= f.label :title %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="file-field input-field col s7">
+      <div class="btn">
+        <span>Template File</span>
+        <%= f.file_field :templates, :class => '', :required => @landing_page.new_record?, :accept => 'application/zip' %>
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text" placeholder="Choose a new landing page template ZIP package">
+      </div>
+    </div>
+    <% unless @landing_page.new_record? %>
+      <div class="input-field col s5">
+        <div class="valign-wrapper" style="height:50px">
+          <div class="valign">
+            <b>Current:</b> <%= link_to @landing_page.templates.original_filename, @landing_page.templates.url %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="input-field col s7">
+      <%= f.text_field :category, :class => '', :placeholder => 'Type new or choose existing from the dropdown' %>
+      <%= f.label :category %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.text_area :notes, :class => 'materialize-textarea' %>
+      <%= f.label :notes %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= f.submit :class => 'btn' %>
+    </div>
+    <div class="col">
+      <%= link_to 'Cancel', :landing_pages, :class => 'btn' %>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  $('#landing_page_category').autocomplete({
+    source: <%= LandingTool::LandingPage.categories.sort.to_json.html_safe %>,
+    minLength: 0
+  }).bind('focus', function () {
+    $(this).autocomplete("search");
+  });
+</script>

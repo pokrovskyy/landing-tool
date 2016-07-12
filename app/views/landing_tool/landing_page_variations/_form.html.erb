@@ -1,0 +1,49 @@
+<%= form_for([@landing_page, @landing_page_variation]) do |f| %>
+  <% if @landing_page_variation.errors.any? %>
+    <div id="error_explanation">
+      <h2>Please fix the following errors:</h2>
+      <ul>
+        <% @landing_page_variation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.text_field :title, :class => '', :required => true %>
+      <%= f.label :title %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.text_field :url, :class => '', :required => true, :placeholder => 'Unique URL for the variation, eg. my-new-landing-page-eng' %>
+      <%= f.label :url %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12">
+      <%= f.text_area :notes, :class => 'materialize-textarea' %>
+      <%= f.label :notes %>
+    </div>
+  </div>
+  <h5>Template Data</h5>
+  <div class="row">
+    <% @landing_page.options.each { |option| %>
+      <div class="input-field col s6">
+        <%= label_tag "landing_page_variation[data][#{option}]", option %>
+        <%= text_field_tag "landing_page_variation[data][#{option}]", @landing_page_variation.data[option] %>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= f.submit :class => 'btn' %>
+    </div>
+    <div class="col">
+      <%= link_to 'Cancel', landing_page_path(@landing_page), :class => 'btn' %>
+    </div>
+  </div>
+<% end %>

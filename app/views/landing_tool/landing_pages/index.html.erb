@@ -1,0 +1,46 @@
+<h4>
+  Landing Pages
+</h4>
+
+<div class="section">
+  <table class="striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Variations</th>
+      <th style="width: 200px">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if @landing_pages.any? %>
+      <% @landing_pages.each do |landing_page| %>
+        <tr class="<%= landing_page.active? ? 'green lighten-5' : 'red lighten-5' %> ">
+          <td><%= landing_page.id %></td>
+          <td><%= link_to landing_page.title, landing_page_path(landing_page) %></td>
+          <td><%= landing_page.category %></td>
+          <td><%= landing_page.variations.length %></td>
+          <td>
+            <%= link_to 'Edit', edit_landing_page_path(landing_page) %> |
+            <%= link_to 'Delete', landing_page, method: :delete, data: { confirm: 'Are you sure?' } %> |
+            <%= enable_disable_switch(landing_page) %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5" class="center-align grey-text">
+          <%= @search_term.blank? ? 'No landing pages' : "No landing pages for search term '#{@search_term}'" %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'New Landing page', new_landing_page_path, :class => 'btn' %>
+
+<% content_for :search_box do %>
+  <%= render :partial => 'layouts/landing_tool/default_search_box' %>
+<% end %>

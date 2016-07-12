@@ -1,0 +1,10 @@
+<%= form_tag '', :method => :get do %>
+  <div class="col s10">
+    <div class="input-field">
+      <input type="text" placeholder="Search..." name="search_term" value="<%= @search_term %>"/>
+    </div>
+  </div>
+  <div class="col s2">
+    <i class="material-icons left">search</i>
+  </div>
+<% end %>

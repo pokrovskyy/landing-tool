@@ -1,0 +1,21 @@
+<nav class="teal shadow z-depth-1">
+  <div class="nav-wrapper row">
+    <div class="col s12">
+      <div class="col s10">
+        <% @breadcrumbs.each_with_index { |crumb, i| %>
+          <% if i == 0 %>
+            <%= link_to crumb[:url], :class => 'breadcrumb' do %>
+              <i class="material-icons left">web</i>
+              <%= crumb[:title].truncate(20) %>
+            <% end %>
+          <% else %>
+            <%= link_to crumb[:title].truncate(20), crumb[:url], :class => 'breadcrumb' %>
+          <% end %>
+        <% } %>
+      </div>
+      <div class="col s2">
+        <%= yield :search_box %>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,60 @@
+<h4><%= @landing_page.title %></h4>
+
+<div class="row collapse">
+  <div class="col s1">Category</div>
+  <div class="col s11 grey-text"><%= @landing_page.category %></div>
+</div>
+<div class="row">
+  <div class="col s1">Notes</div>
+  <div class="col s11 grey-text"><%= @landing_page.notes %></div>
+</div>
+
+<div class="row">
+  <div class="col s12 ">
+    <table class="striped">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>URL</th>
+        <th style="width: 200px">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% if @landing_page_variations.any? %>
+        <% @landing_page_variations.each do |variation| %>
+          <tr class="<%= variation.active? ? 'green lighten-5' : 'red lighten-5' %> ">
+            <td><%= variation.id %></td>
+            <td><%= variation.title %></td>
+            <td><%= link_to "#{variation.full_url(landing_tool)}", "#{variation.full_url(landing_tool)}", :target => '_blank' %></td>
+            <td>
+              <%= link_to 'Edit', edit_landing_page_landing_page_variation_path(@landing_page, variation) %> |
+              <%= link_to 'Delete', landing_page_landing_page_variation_path(@landing_page, variation), method: :delete, data: { confirm: 'Are you sure?' } %> |
+              <%= enable_disable_switch(@landing_page, variation) %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="4" class="center-align grey-text">
+            <%= @search_term.blank? ? 'No landing page variations' : "No landing page variations for search term '#{@search_term}'" %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12">
+    <%= link_to 'Edit', edit_landing_page_path(@landing_page), :class => 'btn' %>
+    <%= link_to 'Back', landing_pages_path, :class => 'btn' %>
+
+    <%= link_to 'New Variation', new_landing_page_landing_page_variation_path(@landing_page), :class => 'btn right' %>
+  </div>
+</div>
+
+<% content_for :search_box do %>
+  <%= render :partial => 'layouts/landing_tool/default_search_box' %>
+<% end %>
