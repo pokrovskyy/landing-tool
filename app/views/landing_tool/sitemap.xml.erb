@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <% @variations.each {|variation| %>
+  <url>
+    <loc><%= request.protocol + request.host_with_port + variation.full_url %></loc>
+    <lastmod><%= variation.updated_at.strftime('%Y-%m-%d') %></lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <% } %>
+</urlset>

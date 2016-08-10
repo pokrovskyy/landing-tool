@@ -1,5 +1,5 @@
 module LandingTool
-  class LandingPagesController < ApplicationController
+  class LandingPagesController < LandingTool::ApplicationController
     protect_from_forgery :except => :serve_page
 
     before_action :set_landing_page, only: [:show, :edit, :update, :destroy, :enable, :disable]
@@ -85,11 +85,12 @@ module LandingTool
         redirect_to (request.env['REQUEST_URI'] + '/')
         return
       end
-      url = request.fullpath.gsub(landing_tool.root_path, '').split('/')[0]
-      path = request.fullpath.gsub(landing_tool.root_path, '').split('/')[1..-1].join('/').split('?').first
+      full_path = request.fullpath.reverse.chomp(landing_tool.root_path).chomp('/').reverse
+      url = full_path.split('/')[0]
+      path = full_path.split('/')[1..-1].join('/').split('?').first
       path = nil if path.blank?
       variation = LandingTool::LandingPageVariation.active.where(:url => url).first
-      if variation && (variation.ensure_compiled_templates rescue false)
+      if variation && variation.landing_page.active? && (variation.ensure_compiled_templates rescue false)
         send_file "#{variation.compiled_folder}/#{path || 'index.html'}", :disposition => :inline
       else
         raise ActionController::RoutingError.new('Not Found')

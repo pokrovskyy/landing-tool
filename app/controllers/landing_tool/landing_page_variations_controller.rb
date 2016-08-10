@@ -1,5 +1,5 @@
 module LandingTool
-  class LandingPageVariationsController < ApplicationController
+  class LandingPageVariationsController < LandingTool::ApplicationController
     before_action :set_landing_page
     before_action :set_landing_page_variation, only: [:show, :edit, :update, :destroy, :enable, :disable]
     before_filter {

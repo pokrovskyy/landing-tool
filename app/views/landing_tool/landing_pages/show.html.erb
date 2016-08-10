@@ -1,5 +1,15 @@
-<h4><%= @landing_page.title %></h4>
+<h4 class="row">
+  <%= @landing_page.title %>
+</h4>
 
+<div class="row collapse">
+  <div class="col s1">Status</div>
+  <div class="col s11 <%= @landing_page.active? ? 'green' : 'red' %>-text">
+    <%= @landing_page.active? ? 'Active' : 'Disabled' %>
+    &nbsp;
+    <%= enable_disable_switch(@landing_page) %>
+  </div>
+</div>
 <div class="row collapse">
   <div class="col s1">Category</div>
   <div class="col s11 grey-text"><%= @landing_page.category %></div>
@@ -23,14 +33,16 @@
       <tbody>
       <% if @landing_page_variations.any? %>
         <% @landing_page_variations.each do |variation| %>
-          <tr class="<%= variation.active? ? 'green lighten-5' : 'red lighten-5' %> ">
+          <tr class="<%= @landing_page.active? && variation.active? ? 'green lighten-5' : 'red lighten-5' %> ">
             <td><%= variation.id %></td>
             <td><%= variation.title %></td>
-            <td><%= link_to "#{variation.full_url(landing_tool)}", "#{variation.full_url(landing_tool)}", :target => '_blank' %></td>
+            <td><%= link_to "#{variation.full_url}", "#{variation.full_url}", :target => '_blank' %></td>
             <td>
               <%= link_to 'Edit', edit_landing_page_landing_page_variation_path(@landing_page, variation) %> |
-              <%= link_to 'Delete', landing_page_landing_page_variation_path(@landing_page, variation), method: :delete, data: { confirm: 'Are you sure?' } %> |
-              <%= enable_disable_switch(@landing_page, variation) %>
+              <%= link_to 'Delete', landing_page_landing_page_variation_path(@landing_page, variation), method: :delete, data: { confirm: 'Are you sure?' } %>
+              <% if @landing_page.active? %>
+                | <%= enable_disable_switch(@landing_page, variation) %>
+              <% end %>
             </td>
           </tr>
         <% end %>

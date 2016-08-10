@@ -41,15 +41,18 @@ module LandingTool
           ext = Pathname.new(f_path).extname.reverse.chomp('.').reverse
           if %w'html htm css js'.include?(ext)
             content = File.read(f_path)
-            File.open(f_path, 'w') { |ff|
-              data.each { |k, v|
-                ff.write content.gsub("{{#{k}}}", v)
-              }
+            data.each { |k, v|
+              content = content.gsub("{{#{k}}}", v)
             }
+            File.open(f_path, 'w') { |ff| ff.write content }
           end
         end
       end
-      self.update_column(:compiled_at, DateTime.now)
+      if new_record?
+        compiled_at = DateTime.now
+      else
+        self.update_column(:compiled_at, DateTime.now)
+      end
     end
 
     def compiled_folder
@@ -60,12 +63,13 @@ module LandingTool
       !!compiled_at && Dir.exists?(compiled_folder)
     end
 
-    def full_url(base_url)
-      base_url.root_path + url
+    def full_url
+      "/" + url
     end
 
     def ensure_compiled_templates
       compile_templates unless compiled?
+      true
     end
 
     private

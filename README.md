@@ -42,6 +42,18 @@ Boot your app
 
 and tool should now be available at http://localhost:3000/landings
 
+## Configuration
+
+To protect landing_tool configuration views from the outer world, add config/landing_tool.yml config file,
+and specify auth details for each environment:
+
+```yaml
+development:
+  auth:
+    name: name
+    password: p@$$w0rd
+```
+
 ## Deployment
 
 landing_tool uses paperclip to store template packages and stores compiled templates in public/landing-tool tree, so consider symlinking 'public/system' and 'public/landing-tool' to some permanent storage in your production environment

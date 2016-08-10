@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require materialize-sprockets
+/// require ace-rails-ap.js
 //= require_tree .
