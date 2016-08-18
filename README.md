@@ -18,7 +18,7 @@ With landing_tool you can easily manage them all in groups:
 Add landing_tool to your Gemfile:
 
 ```ruby
-gem 'landing_tool'
+gem 'landing_tool', git: 'git@github.com:pokrovskyy/landing-tool.git'
 ```
 
 Install and run migrations:
