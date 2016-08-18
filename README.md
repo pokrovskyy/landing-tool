@@ -31,7 +31,7 @@ bundle exec rake db:migrate
 Mount it in routes.rb:
 
 ```ruby
-mount LandingTool::Engine => '/landings'
+mount LandingTool::Engine => '/land'
 ```
 
 Boot your app
@@ -61,6 +61,5 @@ landing_tool uses paperclip to store template packages and stores compiled templ
 ## TODO
 
 * weaken gem dependencies
-* restrict access to managing pages
 * inline template files editor
 * allow configuring public/landing-tool path
