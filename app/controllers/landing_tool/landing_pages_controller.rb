@@ -85,7 +85,7 @@ module LandingTool
         redirect_to (request.env['REQUEST_URI'] + '/')
         return
       end
-      full_path = request.fullpath.reverse.chomp(landing_tool.root_path).chomp('/').reverse
+      full_path = request.fullpath.reverse.chomp(landing_tool.root_path.reverse).chomp('/').reverse
       url = full_path.split('/')[0]
       path = full_path.split('/')[1..-1].join('/').split('?').first
       path = nil if path.blank?
